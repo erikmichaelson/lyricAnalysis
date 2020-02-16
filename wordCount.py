@@ -1,8 +1,6 @@
-import Tkinter, tkFileDialog
+import re
+import string
 
-# setup for the file selection box
-root = Tkinter.Tk()
-root.withdraw()
 
 #
 # This code is an example ripped from w3resource, so props to them
@@ -14,7 +12,7 @@ def word_count(str, counts):
     words = str.split()
 
     for word in words:
-        word = word.lower()
+        word = standardize(word)
         if word in counts:
             counts[word] += 1
         else:
@@ -23,14 +21,10 @@ def word_count(str, counts):
     return counts
 # end w3resource code
 
-if __name__ == '__main__':
+# returns a lowercase version of the input without special characters
+def standardize(word):
+    word = word.lower()
+    word = re.sub('[^a-zA-Z0-9-_.]', '', word)
+    # TODO: turn abbreviations into the full english word
 
-    # prompt the user to choose a text file of
-    file_path = tkFileDialog.askopenfilename()
-    with open(file_path, 'r') as file:
-        data = file.read()#.replace('\n', '')
-
-    counts = dict()
-    word_count(data, counts)
-
-    counts = sorted(counts.items(), key=lambda item: item[1])
+    return word
