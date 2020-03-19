@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # prompt the user to choose a text file of
     file_path = filedialog.askopenfilename()
     with open(file_path, 'r') as file:
-        data = file.read()#.replace('\n', '')
+        data = file.read()
 
     counts = dict()
     wc.word_count(data, counts)
