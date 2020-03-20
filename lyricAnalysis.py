@@ -1,19 +1,18 @@
-from tkinter import filedialog
-from tkinter import *
+import lyricsgenius as lg
 import wordCount as wc
 import numpy as np
 import plotly.graph_objects as go
 
-# setup for the file selection box
-root = Tk()
-root.withdraw()
-
 if __name__ == '__main__':
 
-    # prompt the user to choose a text file of
-    file_path = filedialog.askopenfilename()
-    with open(file_path, 'r') as file:
-        data = file.read()
+    # setup for lyricsgenius
+    genius = lg.Genius("kP20XYcDVeFwyQWN3o0BASGUoxYQFaTY5_0SNsBrkwSGzkqY8zU2_yU1w5TNv5qm")
+    # this sets data to a discography holding 1 album & 1 song, confusingly
+    data = genius.search_song("Lost in Yesterday", "Tame Impala")
+    # this resets data to the actual lyrics of the songs in the pseudo-discography
+    data = data.lyrics
+    # I made this program weirdly work only for songs I'm going to come back
+    # so ideally the user will be able to choose any number of songs to compare
 
     counts = dict()
     wc.word_count(data, counts)
